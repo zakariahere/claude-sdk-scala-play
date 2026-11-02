@@ -8,7 +8,10 @@ scalaVersion := "2.13.18"
 val jacksonVersion = "2.19.4"
 val kotlinVersion  = "1.9.25"
 
+// Flags discarded non-Unit values in production code. Test inherits Compile's options, and every ScalaTest
+// assertion that isn't a test's last line returns an (unused) Assertion — so tests opt out.
 Compile / scalacOptions += "-Wnonunit-statement"
+Test    / scalacOptions -= "-Wnonunit-statement"
 
 libraryDependencies ++= Seq(guice, "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.0" % Test,
   "com.typesafe.scala-logging" %% "scala-logging" % "3.9.5",

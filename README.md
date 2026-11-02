@@ -82,6 +82,7 @@ conf/
   routes
 test/
   ai/ClaudeSettingsSpec.scala
+  controllers/AskControllerSpec.scala   recording fake ClaudeClient: happy path + blank prompt never reaches Claude
 ```
 
 **One rule drives the layout:** the SDK lives behind the `ClaudeClient` trait. The controller depends on the trait, so
@@ -244,8 +245,8 @@ Errors from Claude itself are mapped in the controller to a `502 Bad Gateway` wi
 
 This repo is built step by step as a learning project. Next up:
 
-- [ ] `AskControllerSpec` with a fake `ClaudeClient`
-- [ ] `400` for a blank prompt, without calling Claude
+- [x] `AskControllerSpec` with a fake `ClaudeClient`
+- [x] `400` for a blank prompt, without calling Claude
 - [ ] Hardening: request timeout, `maxRetries`, handling `stopReason` (`MAX_TOKENS`, `REFUSAL`)
 - [ ] System prompt with prompt caching (`CacheControlEphemeral`)
 - [ ] Streaming responses: `createStreaming` → Pekko Streams `Source` → chunked HTTP response

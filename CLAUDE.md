@@ -7,9 +7,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 This is a **learning repo**. Zakaria is learning Scala *and* how to call Claude from Scala via the official
 **Java SDK (`com.anthropic:anthropic-java`)** inside a Play app.
 
-- **Do not write or edit application code, build files or config.** Guide step by step: explain the next small step,
-  show the snippet to type, explain the *why* (Scala idiom, SDK concept, Play concept), then let Zakaria implement it.
-  Review what he wrote when asked. Only edit files when he explicitly asks you to.
+- **New Scala features: guide, don't write.** Explain the next small step, show the snippet to type, explain the *why*
+  (Scala idiom, SDK concept, Play concept), then let Zakaria implement it. Review what he wrote when asked.
+- **Housekeeping: just do it.** Docs (README roadmap/tree, this file), small build tweaks agreed in the session,
+  formatting, verifying with `sbt test`, and commit + push when asked — act autonomously, then report.
 - Keep steps small enough that `sbt compile` / `sbt test` stays green after each one.
 - Prefer teaching the Scala ⇄ Java interop that the SDK forces on you (see below) over hiding it.
 
@@ -39,8 +40,10 @@ CI (`.github/workflows/scala.yml`) runs `sbt test` on JDK 25 (Temurin).
   through `ai.ClaudeSettings.fromConfig`, which throws `PlayException` on a missing/blank key.
 - `play.http.errorHandler = JsonHttpErrorHandler` — unhandled errors are JSON. Claude API errors are recovered in the
   controller into `502`.
-- Controller tests construct controllers directly with `stubControllerComponents()` and an anonymous-class
-  `ClaudeClient` fake — they test behaviour, not routing. `AskControllerSpec` is still a TODO Zakaria owns.
+- Controller tests construct controllers directly with `stubControllerComponents()` and a recording `ClaudeClient`
+  fake (`AskControllerSpec`) — they test behaviour, not routing, and pass an already-parsed body, so validation lives
+  in the controller, not in `Reads`.
+- `-Wnonunit-statement` is on for `Compile` and removed for `Test` (ScalaTest assertions return `Assertion`).
 - `README.md` doubles as the public tutorial; keep its roadmap checklist in sync as steps get done.
 
 ## Claude SDK in Scala — reference implementation
