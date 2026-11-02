@@ -8,6 +8,8 @@ scalaVersion := "2.13.18"
 val jacksonVersion = "2.19.4"
 val kotlinVersion  = "1.9.25"
 
+Compile / scalacOptions += "-Wnonunit-statement"
+
 libraryDependencies ++= Seq(guice, "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.0" % Test,
   "com.typesafe.scala-logging" %% "scala-logging" % "3.9.5",
   "org.typelevel" %% "cats-core" % "2.13.0",

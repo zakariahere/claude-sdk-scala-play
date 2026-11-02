@@ -35,5 +35,4 @@ class AnthropicClaudeClient @Inject()(config: Configuration, lifecycle: Applicat
       .map(_.text())
       .mkString
   }
-
 }
